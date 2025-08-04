@@ -94,3 +94,15 @@ module.exports = () => {
   }
   return config;
 };
+
+/* 
+module.exports = () => {
+  if (isProduction) {
+    config.mode = "production";
+  } else {
+    config.mode = "development";
+    config.devtool = 'source-map';
+    config.optimization.minimize = false;
+  }
+  return config;
+}; */
