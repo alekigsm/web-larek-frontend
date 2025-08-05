@@ -45,8 +45,36 @@ const testData: IShipping = {
 	email: 'ivan@mail.com',
 	phone: '+79123456789',
 };
+const testAddress: IShipping = {
+	payment: 'card',
+	address: '',
+	email: 'ivan@mail.com',
+	phone: '+79123456789',
+};
+const testEmail: IShipping = {
+	payment: 'card',
+	address: 'ул. Пушкина, д. 10',
+	email: '',
+	phone: '+79123456789',
+};
+const testPhone: IShipping = {
+	payment: 'card',
+	address: 'ул. Пушкина, д. 10',
+	email: 'ivan@mail.com',
+	phone: '',
+};
+const testPayment: IShipping = {
+	payment: '',
+	address: 'ул. Пушкина, д. 10',
+	email: 'ivan@mail.com',
+	phone: '+79123456789',
+};
 const pers = new Buyer();
 pers.setPerson(testData);
 console.log(pers.getSavePersonInfo());
-console.log(pers.isValid(testData));
+console.log('все ввели', pers.isValid(testData));
+console.log('нет адресса', pers.isValid(testAddress));
+console.log('нет мыла', pers.isValid(testEmail));
+console.log('нет тел.', pers.isValid(testPhone));
+console.log('нет способа оплаты', pers.isValid(testPayment));
 //
