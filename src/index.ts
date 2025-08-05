@@ -5,48 +5,48 @@ import './scss/styles.scss';
 import { IShipping } from './types';
 import { serverData } from './utils/constants';
 
-
-
-
 const catalog = new Catalog();
-catalog.setProducts(serverData.items)
+catalog.setProducts(serverData.items);
 
-console.log('catalog', catalog.getProducts())
+console.log('catalog', catalog.getProducts());
 
 catalog.setSelectedProduct(serverData.items[5]);
 
-console.log('selected product', catalog.getSelectedProduct())
+console.log('selected product', catalog.getSelectedProduct());
 
-console.log('find product', catalog.getProduct("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"))
+console.log(
+	'find product',
+	catalog.getProduct('c101ab44-ed99-4a54-990d-47aa2bb4e7d9')
+);
 
-console.log()
+console.log();
 
 ///корзина
 const bas = new ModelBasket();
-bas.addProduct(serverData.items[1])
+bas.addProduct(serverData.items[1]);
 console.log('кол-во в корзине', bas.getCountProduct());
-bas.addProduct(serverData.items[4])
+bas.addProduct(serverData.items[4]);
 console.log('список товара 1', bas.getListedProduct());
 console.log('кол-во в корзине', bas.getCountProduct());
-bas.delProduct('c101ab44-ed99-4a54-990d-47aa2bb4e7d9')
+bas.delProduct('c101ab44-ed99-4a54-990d-47aa2bb4e7d9');
 console.log('после кол-во в корзине', bas.getCountProduct());
 console.log('список товара 2', bas.getListedProduct());
-bas.delProduct("1c521d84-c48d-48fa-8cfb-9d911fa515fd")
+bas.delProduct('1c521d84-c48d-48fa-8cfb-9d911fa515fd');
 console.log('наличие товара', bas.hasProduct());
-bas.addProduct(serverData.items[1])
-bas.addProduct(serverData.items[1])
-bas.addProduct(serverData.items[4])
+bas.addProduct(serverData.items[1]);
+bas.addProduct(serverData.items[1]);
+bas.addProduct(serverData.items[4]);
 console.log('сумма', bas.getTotalPrice());
-
 
 //покупатель
 const testData: IShipping = {
-    payment: 'card',
-    address: 'ул. Пушкина, д. 10',
-    email: 'ivan@mail.com',
-    phone: '+79123456789'
+	payment: 'card',
+	address: 'ул. Пушкина, д. 10',
+	email: 'ivan@mail.com',
+	phone: '+79123456789',
 };
 const pers = new Buyer();
-pers.setPerson(testData)
-console.log(pers.getSavePersonInfo())
-console.log(pers.isValid(testData))
+pers.setPerson(testData);
+console.log(pers.getSavePersonInfo());
+console.log(pers.isValid(testData));
+//
