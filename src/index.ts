@@ -6,6 +6,15 @@ import './scss/styles.scss';
 import { IOrder, IShipping } from './types';
 import { serverData } from './utils/constants';
 
+
+/* const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
+const cardPreviewTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
+const cardBasketTemplate = ensureElement<HTMLTemplateElement>('#bcard-basket');
+const basketTemplate = ensureElement<HTMLTemplateElement>('#basket');
+const contactsTemplate = ensureElement<HTMLTemplateElement>('#contacts');
+const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
+const successTemplate = ensureElement<HTMLTemplateElement>('#success'); */
+
 const catalog = new Catalog();
 catalog.setProducts(serverData.items);
 
@@ -107,5 +116,17 @@ const order: IOrder = {
 		"c101ab44-ed99-4a54-990d-47aa2bb4e7d9"
 	]
 }
-console.log(weblarek.getProductList());
-console.log(weblarek.orderProducts(order));
+
+weblarek.getProductList()
+	.then(products => catalog.setProducts(products))
+	.catch(err => {
+		console.error(err);
+	});
+
+
+// Получаем лоты с сервера
+/* api.getLotList()
+	.then(appData.setCatalog.bind(appData))
+	.catch(err => {
+		console.error(err);
+	}); */

@@ -27,4 +27,6 @@ export class Catalog {
         return this.products.find((item) => item.id === id);
     }
 
+
+
 }

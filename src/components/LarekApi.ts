@@ -16,7 +16,7 @@ export class LarekApi extends Api {
                     ...item,
                     image: this.cdn + item.image,
                 })
-            );
+            ); 
         }
     
         getLotUpdate(id: string): Promise<LotUpdate> {
