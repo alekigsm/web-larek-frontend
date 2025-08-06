@@ -19,7 +19,6 @@ export interface IShipping {
 }
 
 
-/*
 export interface IOrder extends IShipping {
     items: string[];    //список товаров
     total: number;      // Итог
@@ -30,19 +29,6 @@ export interface IOrderResult {
 }
 
 export type FormErrors = Partial<Record<keyof IOrder, string>>;
-
-
-// Корзина
-/* export interface IItemCatalog {
-    items: IItem[];
-    total: number;
-    setItem(item: IItem[]): void; // добавить товар
-    getItem(): IItem[]; // получить список товаров
-    getTotal(total: number): number; // итоговая сумма
-    delItem(id: string);
-}
- */
-// результат 
 
 
 

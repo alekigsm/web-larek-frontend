@@ -1,8 +1,9 @@
 import { Buyer } from './components/Buyer';
 import { Catalog } from './components/Catalog';
+import { LarekApi } from './components/LarekApi';
 import { ModelBasket } from './components/ModelBasket';
 import './scss/styles.scss';
-import { IShipping } from './types';
+import { IOrder, IShipping } from './types';
 import { serverData } from './utils/constants';
 
 const catalog = new Catalog();
@@ -85,9 +86,26 @@ testData.phone = 'новый тел';
 pers.setPhone(testData.phone);
 console.log(pers.getPhone());
 console.log(pers.getSavePersonInfo());
-console.log('все ввели', pers.isValid(testData));
+/* console.log('все ввели', pers.isValid(testData));
 console.log('нет адресса', pers.isValid(testAddress));
 console.log('нет мыла', pers.isValid(testEmail));
 console.log('нет тел.', pers.isValid(testPhone));
-console.log('нет способа оплаты', pers.isValid(testPayment));
+console.log('нет способа оплаты', pers.isValid(testPayment)); */
 //
+
+
+const weblarek = new LarekApi('', 'https://larek-api.nomoreparties.co/api/weblarek');
+
+const order: IOrder = {
+	payment: 'card',
+	address: 'ул. Пушкина, д. 10',
+	email: 'ivan@mail.com',
+	phone: '+79123456789',
+	total: 2200,
+	items: [
+		"854cef69-976d-4c2a-a18c-2aa45046c390",
+		"c101ab44-ed99-4a54-990d-47aa2bb4e7d9"
+	]
+}
+console.log(weblarek.getProductList());
+console.log(weblarek.orderProducts(order));

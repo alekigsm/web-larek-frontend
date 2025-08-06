@@ -52,23 +52,31 @@ export class Buyer {
 		return this.persons.payment;
 	}
 
-	isValid(data: IShipping): boolean {
-		if (!data.address) {
-			console.log('адресс невведен', data.address);
-			return false;
+	validatePayment(): string {
+		if (this.persons.payment == '') {
+			return 'способ оплаты незаполнен';
 		}
-		if (!data.email) {
-			console.log('email невведен', data.email);
-			return false;
+		return '';
+	}
+
+	validateaddress(): string {
+		if (this.persons.address == '') {
+			return 'адресс незаполнен';
 		}
-		if (!data.payment) {
-			console.log('способ получения неуказан', data.payment);
-			return false;
+		return '';
+	}
+
+	validateEmail(): string {
+		if (this.persons.email == '') {
+			return 'email незаполнен';
 		}
-		if (!data.phone) {
-			console.log('телефон невведен', data.phone);
-			return false;
+		return '';
+	}
+
+	validatePhone(): string {
+		if (this.persons.phone == '') {
+			return 'телефон незаполнен';
 		}
-		return true;
+		return '';
 	}
 }
