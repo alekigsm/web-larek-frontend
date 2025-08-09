@@ -1,10 +1,17 @@
+import { EventEmitter } from './components/base/events';
 import { Buyer } from './components/Buyer';
 import { Catalog } from './components/Catalog';
 import { LarekApi } from './components/LarekApi';
 import { ModelBasket } from './components/ModelBasket';
+import { Basket } from './components/View/Basket';
+import { Form } from './components/common/Form';
+import { Success } from './components/View/Success';
 import './scss/styles.scss';
 import { IOrder, IShipping } from './types';
-import { serverData } from './utils/constants';
+import { API_URL, serverData } from './utils/constants';
+import { cloneTemplate } from './utils/utils';
+import { CardCatalog } from './components/View/CardCatalog';
+import { CardPreview } from './components/View/CardPreview';
 
 
 /* const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
@@ -55,55 +62,12 @@ const testData: IShipping = {
 	email: 'ivan@mail.com',
 	phone: '+79123456789',
 };
-const testAddress: IShipping = {
-	payment: 'card',
-	address: '',
-	email: 'ivan@mail.com',
-	phone: '+79123456789',
-};
-const testEmail: IShipping = {
-	payment: 'card',
-	address: 'ул. Пушкина, д. 10',
-	email: '',
-	phone: '+79123456789',
-};
-const testPhone: IShipping = {
-	payment: 'card',
-	address: 'ул. Пушкина, д. 10',
-	email: 'ivan@mail.com',
-	phone: '',
-};
-const testPayment: IShipping = {
-	payment: '',
-	address: 'ул. Пушкина, д. 10',
-	email: 'ivan@mail.com',
-	phone: '+79123456789',
-};
 const pers = new Buyer();
 pers.setPerson(testData);
-console.log(pers.getSavePersonInfo());
-testData.address = 'новый адрес';
-pers.setAddress(testData.address);
-console.log(pers.getAddress());
-testData.email = 'новая почта';
-pers.setEmail(testData.email);
-console.log(pers.getEmail());
-testData.payment = 'новый способ оплаты';
-pers.setPayment(testData.payment);
-console.log(pers.getPayment());
-testData.phone = 'новый тел';
-pers.setPhone(testData.phone);
-console.log(pers.getPhone());
-console.log(pers.getSavePersonInfo());
-/* console.log('все ввели', pers.isValid(testData));
-console.log('нет адресса', pers.isValid(testAddress));
-console.log('нет мыла', pers.isValid(testEmail));
-console.log('нет тел.', pers.isValid(testPhone));
-console.log('нет способа оплаты', pers.isValid(testPayment)); */
-//
 
 
-const weblarek = new LarekApi('', 'https://larek-api.nomoreparties.co/api/weblarek');
+
+const weblarek = new LarekApi('', API_URL);
 
 const order: IOrder = {
 	payment: 'card',
@@ -117,16 +81,81 @@ const order: IOrder = {
 	]
 }
 
+
+//view
+const actions = {
+	onClick: () => {
+		console.log('click');
+	}
+}
+/* 
+const successContainer = cloneTemplate('#success')
+const success = new Success(successContainer, actions)
+
+const gallery = document.querySelector('.gallery') as HTMLElement;
+gallery.appendChild(success.render());
+
+
 weblarek.getProductList()
-	.then(products => catalog.setProducts(products))
-	.catch(err => {
-		console.error(err);
-	});
+	.then(products => {
 
-
-// Получаем лоты с сервера
-/* api.getLotList()
-	.then(appData.setCatalog.bind(appData))
+		catalog.setProducts(products)
+		success.render({ total: 25200 })
+	})
 	.catch(err => {
 		console.error(err);
 	}); */
+
+
+
+/* 
+const basketContainer = cloneTemplate('#basket')
+const basket = new Basket(basketContainer, actions)
+
+const gallery1 = document.querySelector('.gallery') as HTMLElement;
+gallery1.appendChild(basket.render({ total: 0 }));
+
+
+weblarek.getProductList()
+	.then(products => {
+
+		catalog.setProducts(products)
+
+		basket.render({ total: 3400 })
+	})
+	.catch(err => {
+		console.error(err);
+	}); */
+
+
+/* 
+const gallery2 = document.querySelector('.gallery') as HTMLElement;
+const cardContainer = cloneTemplate('#card-catalog');
+const card = new CardCatalog(cardContainer, actions);
+gallery2.appendChild(card.render({ price: 5555555 })); */
+
+
+/* 
+const gallery3 = document.querySelector('.gallery') as HTMLElement;
+const cardContainer2 = cloneTemplate('#card-preview');
+const card2 = new CardPreview(cardContainer2, actions);
+gallery3.appendChild(card2.render());
+
+weblarek.getProductList()
+	.then(products => {
+
+		catalog.setProducts(products)
+
+		card2.render({
+			image: 'https://yandex.ru/images/search?uinfo=&text=%D0%92%D0%BE%D0%B4%D0%BE%D0%BF%D0%B0%D0%B4&nl=1&source=morda',
+			price: 85000, category: "тнкс", title: "новый титл", description: "большйо текст"
+		})
+	})
+	.catch(err => {
+		console.error(err);
+	}); */
+
+const gallery4 = document.querySelector('.gallery') as HTMLElement;
+const cardContainerBasket = cloneTemplate('#card-basket');
+const card4 = new CardPreview(cardContainerBasket, actions);
+gallery4.appendChild(card4.render());
