@@ -21,13 +21,13 @@ export class CardCatalog extends Component<IItem> {
 
     }
 
-    set cardPrice(price: number) {
+    set price(price: number) {
         this._cardPrice.textContent = `${price} синапсов`;
     }
-    set cardTitle(title: string) {
+    set title(title: string) {
         this._cardTitle.textContent = `${title}`;
     }
-    set cardCategory(category: string) {
+    set category(category: string) {
         this._cardCategory.textContent = `${category}`;
     }
 

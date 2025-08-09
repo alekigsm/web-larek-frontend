@@ -30,22 +30,22 @@ export class CardPreview extends Component<IItem> {
             this._cardButton.addEventListener('click', actions.onClick)
     }
 
-    set cardText(description: string) {
+    set description(description: string) {
         this._cardText.textContent = `${description}`;
     }
 
-    set cardPrice(price: number) {
+    set price(price: number) {
         this._cardPrice.textContent = `${price} синапсов`;
     }
 
-    set cardTitle(title: string) {
+    set title(title: string) {
         this._cardTitle.textContent = title;
     }
-    set cardCategory(category: string) {
+    set category(category: string) {
         this._cardCategory.textContent = `${category}`;
     }
 
-    set cardImg(image: string) {
+    set image(image: string) {
         if (this._cardImg) {
             this.setImage(this._cardImg, image, this._cardTitle.textContent);
         }

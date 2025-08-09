@@ -13,6 +13,7 @@ import { cloneTemplate } from './utils/utils';
 import { CardCatalog } from './components/View/CardCatalog';
 import { CardPreview } from './components/View/CardPreview';
 import { CardBasket } from './components/View/CardBasket';
+import { Contacts } from './components/View/Сontacts';
 
 
 /* const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
@@ -129,15 +130,15 @@ weblarek.getProductList()
 	}); */
 
 
-/* 
-const gallery2 = document.querySelector('.gallery') as HTMLElement;
+
+/* const gallery2 = document.querySelector('.gallery') as HTMLElement;
 const cardContainer = cloneTemplate('#card-catalog');
 const card = new CardCatalog(cardContainer, actions);
-gallery2.appendChild(card.render({ price: 5555555 })); */
+gallery2.appendChild(card.render({ price: 5555555 }));
 
+ */
 
-/* 
-const gallery3 = document.querySelector('.gallery') as HTMLElement;
+/* const gallery3 = document.querySelector('.gallery') as HTMLElement;
 const cardContainer2 = cloneTemplate('#card-preview');
 const card2 = new CardPreview(cardContainer2, actions);
 gallery3.appendChild(card2.render());
@@ -149,14 +150,35 @@ weblarek.getProductList()
 
 		card2.render({
 			image: 'https://yandex.ru/images/search?uinfo=&text=%D0%92%D0%BE%D0%B4%D0%BE%D0%BF%D0%B0%D0%B4&nl=1&source=morda',
-			price: 85000, category: "тнкс", title: "новый титл", description: "большйо текст"
+			price: 8500, category: "тнкс", title: "новый титл", description: "большйо текст"
 		})
 	})
 	.catch(err => {
 		console.error(err);
 	}); */
 
-const gallery4 = document.querySelector('.gallery') as HTMLElement;
+/* const gallery4 = document.querySelector('.gallery') as HTMLElement;
 const cardContainerBasket = cloneTemplate('#card-basket');
 const card4 = new CardBasket(cardContainerBasket, actions);
-gallery4.appendChild(card4.render({ price: 12, title: 'rerb' }));
+gallery4.appendChild(card4.render({ price: 442, title: 'rerb', id: "2" }));
+weblarek.getProductList()
+	.then(products => {
+
+		catalog.setProducts(products)
+
+		card4.render({
+			price: 85000, title: "новый титл", description: "большйо текст"
+		})
+	})
+	.catch(err => {
+		console.error(err);
+	}); */
+
+
+
+const gallery5 = document.querySelector('.gallery') as HTMLElement;
+const contact = cloneTemplate('#contacts');
+const card5 = new Contacts(contact, actions);
+
+gallery5.append(card5.render());
+
