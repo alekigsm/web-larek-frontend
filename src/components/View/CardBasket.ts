@@ -6,19 +6,17 @@ interface Actions {
     onClick: () => void;
 }
 
-
-
 export class CardBasket extends Component<IItem> {
     protected _basketItem: HTMLElement;
-    protected _cardPrice: HTMLElement;
-    protected _cardTitle: HTMLElement;
+    protected _price: HTMLElement;
+    protected _Title: HTMLElement;
     protected _itemDeleteButton: HTMLButtonElement;
 
     constructor(container: HTMLElement, actions: Actions) {
         super(container);
         this._basketItem = ensureElement('.basket__item-index', this.container);
-        this._cardPrice = ensureElement('.card__price', this.container);
-        this._cardTitle = this.container.querySelector('.card__title');
+        this._price = ensureElement('.card__price', this.container);
+        this._Title = this.container.querySelector('.card__title');
         this._itemDeleteButton = ensureElement('.card__button', this.container) as HTMLButtonElement;
 
         if (actions?.onClick)
@@ -26,12 +24,13 @@ export class CardBasket extends Component<IItem> {
     }
 
 
-    set cardPrice(price: number) {
-        this._cardPrice.textContent = `${price} синапсов`;
+    set price(price: number) {
+
+        this._price.textContent = `${price} синапсов`;
     }
 
-    set cardTitle(title: string) {
-        this._cardTitle.textContent = title;
+    set title(title: string) {
+        this._Title.textContent = `${title} синапсов`;
     }
 
     set counter(count: number) {
