@@ -12,6 +12,7 @@ import { API_URL, serverData } from './utils/constants';
 import { cloneTemplate } from './utils/utils';
 import { CardCatalog } from './components/View/CardCatalog';
 import { CardPreview } from './components/View/CardPreview';
+import { CardBasket } from './components/View/CardBasket';
 
 
 /* const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
@@ -157,5 +158,5 @@ weblarek.getProductList()
 
 const gallery4 = document.querySelector('.gallery') as HTMLElement;
 const cardContainerBasket = cloneTemplate('#card-basket');
-const card4 = new CardPreview(cardContainerBasket, actions);
-gallery4.appendChild(card4.render());
+const card4 = new CardBasket(cardContainerBasket, actions);
+gallery4.appendChild(card4.render({ price: 12, title: 'rerb' }));
