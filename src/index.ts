@@ -14,6 +14,7 @@ import { CardCatalog } from './components/View/CardCatalog';
 import { CardPreview } from './components/View/CardPreview';
 import { CardBasket } from './components/View/CardBasket';
 import { Contacts } from './components/View/Сontacts';
+import { Order } from './components/View/Order';
 
 
 /* const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
@@ -71,7 +72,7 @@ pers.setPerson(testData);
 
 const weblarek = new LarekApi('', API_URL);
 
-const order: IOrder = {
+const orders: IOrder = {
 	payment: 'card',
 	address: 'ул. Пушкина, д. 10',
 	email: 'ivan@mail.com',
@@ -175,10 +176,16 @@ weblarek.getProductList()
 	}); */
 
 
-
+/* 
 const gallery5 = document.querySelector('.gallery') as HTMLElement;
 const contact = cloneTemplate('#contacts');
 const card5 = new Contacts(contact, actions);
 
-gallery5.append(card5.render());
+gallery5.append(card5.render()); */
 
+
+const gallery6 = document.querySelector('.gallery') as HTMLElement;
+const order1 = cloneTemplate('#order');
+const card5 = new Order(order1, actions);
+
+gallery6.append(card5.render());

@@ -17,7 +17,6 @@ export class Contacts extends Component<IShipping> {
     }
 
 
-
     set email(value: string) {
         this._email.value = value
     }

@@ -6,7 +6,7 @@ interface Actions {
     onClick: () => void;
 }
 
-export class Contacts extends Component<IShipping> {
+export class Order extends Component<IShipping> {
     protected _payment: HTMLElement;
     protected _address: HTMLInputElement;
 
