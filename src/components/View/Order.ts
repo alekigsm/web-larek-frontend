@@ -4,10 +4,6 @@ import { Component } from "../base/Component";
 import { IEvents } from "../base/events";
 import { Form } from "../common/Form";
 
-interface Actions {
-    onClick: () => void;
-}
-
 export class Order extends Form<IShipping> {
     protected _payment: HTMLElement;
     protected _address: HTMLInputElement;
@@ -18,6 +14,9 @@ export class Order extends Form<IShipping> {
 
     set address(value: string) {
         (this.container.elements.namedItem('address') as HTMLInputElement).value = value;
+    }
+    set payment(value: boolean) {
+
     }
 
 }

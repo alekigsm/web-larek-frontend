@@ -6,9 +6,6 @@ interface Actions {
     onClick: () => void;
 }
 
-
-
-
 export class CardPreview extends Component<IItem> {
     protected _cardPrice: HTMLElement;
     protected _cardImg: HTMLImageElement;
@@ -52,17 +49,3 @@ export class CardPreview extends Component<IItem> {
     }
 
 }
-/* <template id="card-preview">
-        <div class="card card_full">
-            <img class="card__image" src="<%=require('../images/Subtract.svg')%>" alt="" />
-            <div class="card__column">
-                <span class="card__category card__category_other">другое</span>
-                <h2 class="card__title">Бэкенд-антистресс</h2>
-                <p class="card__text">Если планируете решать задачи в тренажёре, берите два.</p>
-                <div class="card__row">
-                    <button class="button card__button">В корзину</button>
-                    <span class="card__price">1000 синапсов</span>
-                </div>
-            </div>
-        </div>
-    </template> */

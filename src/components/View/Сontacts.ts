@@ -4,10 +4,6 @@ import { Component } from "../base/Component";
 import { IEvents } from "../base/events";
 import { Form } from "../common/Form";
 
-interface Actions {
-    onClick: () => void;
-}
-
 export class Contacts extends Form<IShipping> {
     protected _email: HTMLInputElement;
     protected _phone: HTMLInputElement;

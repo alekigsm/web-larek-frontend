@@ -8,55 +8,59 @@ import { Form } from './components/common/Form';
 import { Success } from './components/View/Success';
 import './scss/styles.scss';
 import { IOrder, IShipping } from './types';
-import { API_URL, serverData } from './utils/constants';
-import { cloneTemplate } from './utils/utils';
+import { API_URL, CDN_URL, serverData } from './utils/constants';
+import { cloneTemplate, ensureElement } from './utils/utils';
 import { CardCatalog } from './components/View/CardCatalog';
 import { CardPreview } from './components/View/CardPreview';
 import { CardBasket } from './components/View/CardBasket';
 import { Contacts } from './components/View/Сontacts';
 import { Order } from './components/View/Order';
+import { Modal } from './components/common/Modal';
 
+const events = new EventEmitter();
+const api = new LarekApi(CDN_URL, API_URL);
+// Чтобы мониторить все события, для отладки
+events.onAll(({ eventName, data }) => {
+	console.log(eventName, data);
+})
 
-/* const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
+const actions = {
+	onClick: () => {
+		console.log('click');
+	}
+}
+
+const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
 const cardPreviewTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
-const cardBasketTemplate = ensureElement<HTMLTemplateElement>('#bcard-basket');
+const cardBasketTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
 const basketTemplate = ensureElement<HTMLTemplateElement>('#basket');
 const contactsTemplate = ensureElement<HTMLTemplateElement>('#contacts');
 const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
-const successTemplate = ensureElement<HTMLTemplateElement>('#success'); */
+const successTemplate = ensureElement<HTMLTemplateElement>('#success');
+
+const order = new Order(cloneTemplate(orderTemplate), events);
+
+const modal = new Modal(ensureElement<HTMLElement>('#modal__container'), events);
+
+events.on('order:open', () => {
+	modal.render({
+		content: order.render({
+			phone: '',
+			email: '',
+			valid: false,
+			errors: []
+		})
+	});
+});
 
 const catalog = new Catalog();
 catalog.setProducts(serverData.items);
-
-console.log('catalog', catalog.getProducts());
-
-catalog.setSelectedProduct(serverData.items[5]);
-
-console.log('selected product', catalog.getSelectedProduct());
-
-console.log(
-	'find product',
-	catalog.getProduct('c101ab44-ed99-4a54-990d-47aa2bb4e7d9')
-);
-
-console.log();
 
 ///корзина
 const bas = new ModelBasket();
 bas.addProduct(serverData.items[1]);
 console.log('кол-во в корзине', bas.getCountProduct());
-bas.addProduct(serverData.items[4]);
-console.log('список товара 1', bas.getListedProduct());
-console.log('кол-во в корзине', bas.getCountProduct());
-bas.delProduct('c101ab44-ed99-4a54-990d-47aa2bb4e7d9');
-console.log('после кол-во в корзине', bas.getCountProduct());
-console.log('список товара 2', bas.getListedProduct());
-bas.delProduct('1c521d84-c48d-48fa-8cfb-9d911fa515fd');
-console.log('наличие товара', bas.hasProduct());
-bas.addProduct(serverData.items[1]);
-bas.addProduct(serverData.items[1]);
-bas.addProduct(serverData.items[4]);
-console.log('сумма', bas.getTotalPrice());
+
 
 //покупатель
 const testData: IShipping = {
@@ -67,10 +71,6 @@ const testData: IShipping = {
 };
 const pers = new Buyer();
 pers.setPerson(testData);
-
-
-
-const weblarek = new LarekApi('', API_URL);
 
 const orders: IOrder = {
 	payment: 'card',
@@ -86,12 +86,8 @@ const orders: IOrder = {
 
 
 //view
-const actions = {
-	onClick: () => {
-		console.log('click');
-	}
-}
-/* 
+
+/*
 const successContainer = cloneTemplate('#success')
 const success = new Success(successContainer, actions)
 
@@ -111,7 +107,7 @@ weblarek.getProductList()
 
 
 
-/* 
+/*
 const basketContainer = cloneTemplate('#basket')
 const basket = new Basket(basketContainer, actions)
 
@@ -176,13 +172,15 @@ weblarek.getProductList()
 	}); */
 
 
-/* 
-const gallery5 = document.querySelector('.gallery') as HTMLElement;
-const contact = cloneTemplate('#contacts');
-const card5 = new Contacts(contact, actions);
 
-gallery5.append(card5.render()); */
+// Чтобы мониторить все события, для отладки
 
+/* const gallery5 = document.querySelector('.gallery') as HTMLElement;
 
-const gallery6 = document.querySelector('.gallery') as HTMLElement;
-const order1 = cloneTemplate('#order');
+const cont = new Contacts(cloneTemplate('#contacts'), events);
+
+gallery5.appendChild(cont.render({ valid: true, errors: [], email: 'test@example.com', phone: '+7 (123) 456-7890' }));
+ */
+/* const gallery6 = document.querySelector('.gallery') as HTMLElement;
+const card5 = new Order(cloneTemplate('#order'), events);
+gallery6.append(card5.render({ valid: true, errors: [], address: 'вава' }));  */
