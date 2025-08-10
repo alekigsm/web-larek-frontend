@@ -1,24 +1,23 @@
 import { IItem, IShipping } from "../../types";
 import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
+import { IEvents } from "../base/events";
+import { Form } from "../common/Form";
 
 interface Actions {
     onClick: () => void;
 }
 
-export class Order extends Component<IShipping> {
+export class Order extends Form<IShipping> {
     protected _payment: HTMLElement;
     protected _address: HTMLInputElement;
 
-    constructor(container: HTMLElement, actions: Actions) {
-        super(container);
-        this._address = ensureElement('input[name="address"]', this.container) as HTMLInputElement;
+    constructor(container: HTMLFormElement, events: IEvents) {
+        super(container, events);
     }
 
-
     set address(value: string) {
-        this._address.value = value
+        (this.container.elements.namedItem('address') as HTMLInputElement).value = value;
     }
 
 }
-

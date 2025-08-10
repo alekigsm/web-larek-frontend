@@ -186,6 +186,3 @@ gallery5.append(card5.render()); */
 
 const gallery6 = document.querySelector('.gallery') as HTMLElement;
 const order1 = cloneTemplate('#order');
-const card5 = new Order(order1, actions);
-
-gallery6.append(card5.render());
