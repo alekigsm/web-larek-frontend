@@ -91,19 +91,43 @@ events.on('product:selected', () => {
 	const itemData = {
 		...catalog.getSelectedProduct(),
 		buttonText: basket.hasProduct(catalog.getSelectedProduct()) ? 'Удалить из корзины' : 'Добавить в корзину',
+
 	};
 	const cardElement = card.render(itemData)
 	modal.render({ content: cardElement })
+
 });
 
 events.on('product:click', () => {
 	if (basket.hasProduct(catalog.getSelectedProduct())) {
 		basket.delProduct(catalog.getSelectedProduct().id)
+		page.render({ counter: basket.getCountProduct() })
 	}
 	else {
 		basket.addProduct(catalog.getSelectedProduct())
+		page.render({ counter: basket.getCountProduct() })
 	}
+	modal.close();
+
 })
+
+events.on('basket:changed', () => {
+	const cardArray = basket.getListedProduct()
+		.map((item) => {
+			const actions = {
+				onClick: () => {
+					catalog.setSelectedProduct(item);
+				}
+			}
+			const card = new CardBasket(cloneTemplate(cardBasketTemplate), actions);
+			const cardElement = card.render(item)
+			return cardElement
+		});
+
+	page.render({ catalog: cardArray })
+
+});
+
 
 events.on(`modal:open`, () => {
 	page.render({ locked: true })
