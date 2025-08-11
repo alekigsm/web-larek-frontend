@@ -33,13 +33,8 @@ export class ModelBasket {
         return this.items.reduce((sum, items) => sum + items.price, 0);
     }
     // наличие товара
-    hasProduct() {
-        if (this.items.length > 0) {
-            return console.log('товар есть');
-        }
-        else {
-            return console.log('товара нет');
-        }
+    hasProduct(item: IItem): boolean {
+        return this.items.some((product) => product.id == item.id)
     }
 
 }

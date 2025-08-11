@@ -42,6 +42,7 @@ const buyer = new Buyer(events);
 // компоненты представления
 const order = new Order(cloneTemplate(orderTemplate), events);
 const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
+const successContainer = cloneTemplate('#success');
 const page = new Page(ensureElement<HTMLElement>('.page'), events);
 
 const actions = {
@@ -49,8 +50,9 @@ const actions = {
 		modal.close();
 	}
 }
-const success = new Success(cloneTemplate(successTemplate), actions);
-modal.render({ content: success.render() })
+//const success = new Success(cloneTemplate(successTemplate), actions);
+const success = new Success(successContainer, actions)
+//modal.render({ content: success.render() })
 
 
 
@@ -63,16 +65,17 @@ api.getProductList()
 	.catch((error) => { console.log(error) })
 
 events.on('catalog:changed', () => {
-	const cardArray = catalog.getProducts().map((item) => {
-		const actions = {
-			onClick: () => {
-				catalog.setSelectedProduct(item);
+	const cardArray = catalog.getProducts()
+		.map((item) => {
+			const actions = {
+				onClick: () => {
+					catalog.setSelectedProduct(item);
+				}
 			}
-		}
-		const card = new CardCatalog(cloneTemplate(cardCatalogTemplate), actions);
-		const cardElement = card.render(item)
-		return cardElement
-	});
+			const card = new CardCatalog(cloneTemplate(cardCatalogTemplate), actions);
+			const cardElement = card.render(item)
+			return cardElement
+		});
 	page.render({ catalog: cardArray })
 });
 
@@ -81,16 +84,26 @@ events.on('catalog:changed', () => {
 events.on('product:selected', () => {
 	const actions = {
 		onClick: () => {
-			console.log('в коризну')
+			events.emit('product:click');
 		},
 	};
 	const card = new CardPreview(cloneTemplate(cardPreviewTemplate), actions);
-	const cardElement = card.render(catalog.getSelectedProduct())
+	const itemData = {
+		...catalog.getSelectedProduct(),
+		buttonText: basket.hasProduct(catalog.getSelectedProduct()) ? 'Удалить из корзины' : 'Добавить в корзину',
+	};
+	const cardElement = card.render(itemData)
 	modal.render({ content: cardElement })
 });
 
-
-
+events.on('product:click', () => {
+	if (basket.hasProduct(catalog.getSelectedProduct())) {
+		basket.delProduct(catalog.getSelectedProduct().id)
+	}
+	else {
+		basket.addProduct(catalog.getSelectedProduct())
+	}
+})
 
 events.on(`modal:open`, () => {
 	page.render({ locked: true })

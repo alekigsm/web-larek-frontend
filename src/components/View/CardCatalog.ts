@@ -32,32 +32,15 @@ export class CardCatalog extends Component<IItem> {
     }
     set title(title: string) {
         this._cardTitle.textContent = `${title}`;
+        // this._cardTitle.classList.add('.card__full')
     }
     set category(category: string) {
         this._cardCategory.textContent = `${category}`;
-        /* 
-                this._cardCategory.classList.toggle('card__category_soft', category == 'soft')
-                this._cardCategory.classList.toggle('card__category_hard', category == 'hard')
-                this._cardCategory.classList.toggle('card__category_other', category == 'other')
-                this._cardCategory.classList.toggle('card__category_additional', category == 'additional')
-                this._cardCategory.classList.toggle('card__category_button', category == 'button')
-         */
-        /*if (this._cardCategory.textContent == 'card__category_soft') {
-          this._cardCategory.classList.add('card__category_soft')
-      }
-      else if (category == 'card__category_hard') {
-          this._cardCategory.classList.add('card__category_hard')
-      }
-      else if (category == 'card__category_other') {
-          this._cardCategory.classList.add('card__category_other')
-      }
-      else if (category == 'card__category_additional') {
-          this._cardCategory.classList.add('card__category_additional')
-      }
-      else if (category == 'card__category_button') {
-          this._cardCategory.classList.add('card__category_button')
-      } */
-
+        this._cardCategory.classList.toggle('card__category_soft', category === 'софт-скил')
+        this._cardCategory.classList.toggle('card__category_hard', category === 'хард-скил')
+        this._cardCategory.classList.toggle('card__category_other', category === 'другое')
+        this._cardCategory.classList.toggle('card__category_additional', category === 'дополнительное')
+        this._cardCategory.classList.toggle('card__category_button', category === 'кнопка')
     }
 
     set image(value: string) {

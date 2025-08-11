@@ -20,7 +20,7 @@ export class Catalog {
 
     setSelectedProduct(product: IItem) {
         this.selectedProduct = product;
-        this.events.emit('Product:selected');
+        this.events.emit('product:selected');
     }
 
     getSelectedProduct(): IItem {

@@ -47,5 +47,8 @@ export class CardPreview extends Component<IItem> {
             this.setImage(this._cardImg, image, this._cardTitle.textContent);
         }
     }
+    set buttonText(text: string) {
+        this._cardButton.textContent = text;
+    }
 
 }

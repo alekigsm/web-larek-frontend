@@ -9,6 +9,7 @@
   color: white;
   padding: $defaultPadding;
 
+
   &_full {
     flex-direction: row;
     background-color: transparent;
@@ -23,6 +24,7 @@
     background-color: transparent;
     align-items: center;
     border-radius: 0;
+
 
     .card__title {
       flex-grow: 1;
@@ -51,6 +53,7 @@
     font-weight: 500;
     margin: 0;
     flex-grow: 1;
+
   }
 
   &__text {
