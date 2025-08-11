@@ -16,6 +16,7 @@ import { CardBasket } from './components/View/CardBasket';
 import { Contacts } from './components/View/Сontacts';
 import { Order } from './components/View/Order';
 import { Modal } from './components/common/Modal';
+import { Page } from './components/View/Page';
 
 const events = new EventEmitter();
 const api = new LarekApi(CDN_URL, API_URL);
@@ -24,12 +25,7 @@ events.onAll(({ eventName, data }) => {
 	console.log(eventName, data);
 })
 
-const actions = {
-	onClick: () => {
-		console.log('click');
-	}
-}
-
+// поиск шаблонов
 const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
 const cardPreviewTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
 const cardBasketTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
@@ -38,51 +34,27 @@ const contactsTemplate = ensureElement<HTMLTemplateElement>('#contacts');
 const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
 const successTemplate = ensureElement<HTMLTemplateElement>('#success');
 
+//модели данных
+const catalog = new Catalog(events);
+const basket = new ModelBasket(events);
+const buyer = new Buyer(events);
+
+// компоненты представления
 const order = new Order(cloneTemplate(orderTemplate), events);
+const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
+const successContainer = cloneTemplate('#success');
+const page = new Page(ensureElement<HTMLElement>('.page'), events);
 
-const modal = new Modal(ensureElement<HTMLElement>('#modal__container'), events);
-
-events.on('order:open', () => {
-	modal.render({
-		content: order.render({
-			phone: '',
-			email: '',
-			valid: false,
-			errors: []
-		})
-	});
-});
-
-const catalog = new Catalog();
-catalog.setProducts(serverData.items);
-
-///корзина
-const bas = new ModelBasket();
-bas.addProduct(serverData.items[1]);
-console.log('кол-во в корзине', bas.getCountProduct());
-
-
-//покупатель
-const testData: IShipping = {
-	payment: 'card',
-	address: 'ул. Пушкина, д. 10',
-	email: 'ivan@mail.com',
-	phone: '+79123456789',
-};
-const pers = new Buyer();
-pers.setPerson(testData);
-
-const orders: IOrder = {
-	payment: 'card',
-	address: 'ул. Пушкина, д. 10',
-	email: 'ivan@mail.com',
-	phone: '+79123456789',
-	total: 2200,
-	items: [
-		"854cef69-976d-4c2a-a18c-2aa45046c390",
-		"c101ab44-ed99-4a54-990d-47aa2bb4e7d9"
-	]
+const actions = {
+	onClick: () => {
+		modal.close();
+	}
 }
+const success = new Success(successContainer, actions)
+//const success = new Success(cloneTemplate(successTemplate), actions);
+modal.render({ content: success.render() })
+
+
 
 
 //view
@@ -183,4 +155,4 @@ gallery5.appendChild(cont.render({ valid: true, errors: [], email: 'test@example
  */
 /* const gallery6 = document.querySelector('.gallery') as HTMLElement;
 const card5 = new Order(cloneTemplate('#order'), events);
-gallery6.append(card5.render({ valid: true, errors: [], address: 'вава' }));  */
+gallery6.append(card5.render({ valid: true, errors: ''; address: 'вава' }));  */

@@ -5,18 +5,21 @@ import { IEvents } from "../base/events";
 import { Form } from "../common/Form";
 
 export class Order extends Form<IShipping> {
-    protected _payment: HTMLElement;
-    protected _address: HTMLInputElement;
+    protected paymentCardButton: HTMLButtonElement;
+    protected paymentCashButton: HTMLButtonElement;
 
     constructor(container: HTMLFormElement, events: IEvents) {
         super(container, events);
+        this.paymentCardButton = ensureElement<HTMLButtonElement>('.button_alt[name=card]')
+        this.paymentCashButton = ensureElement<HTMLButtonElement>('.button_alt[name=cash]')
     }
 
     set address(value: string) {
         (this.container.elements.namedItem('address') as HTMLInputElement).value = value;
     }
-    set payment(value: boolean) {
-
+    set payment(value: string) {
+        this.paymentCardButton.classList.toggle('button_alt-active', value == 'card')
+        this.paymentCashButton.classList.toggle('button_alt-active', value == 'cash')
     }
 
 }

@@ -5,7 +5,7 @@ import { Component } from "../base/Component";
 
 interface IFormState {
     valid: boolean;
-    errors: string[];
+    errors: string;
 }
 
 

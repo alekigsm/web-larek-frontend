@@ -1,14 +1,24 @@
 import { IItem } from "../types";
+import { IEvents } from "./base/events";
 
 export class ModelBasket {
     protected items: IItem[] = [];
+
+    constructor(protected events: IEvents) { }
     //добавить товар
     addProduct(item: IItem) {
         this.items.push(item)
+        this.events.emit('basket:changed')
     }
     //удалить товар
     delProduct(id: string) {
         this.items = this.items.filter((item) => item.id !== id)
+        this.events.emit('basket:changed')
+    }
+
+    clearBasket() {
+        this.items = [];
+        this.events.emit('basket:changed')
     }
     //получить количество товаров
     getCountProduct() {

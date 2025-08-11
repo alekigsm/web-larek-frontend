@@ -1,4 +1,5 @@
 import { IItem, IShipping } from '../types';
+import { IEvents } from './base/events';
 
 export class Buyer {
 	protected persons: IShipping = {
@@ -7,28 +8,36 @@ export class Buyer {
 		email: '',
 		phone: '',
 	};
+	constructor(protected events: IEvents) {
+
+	}
 	setPerson(data: IShipping) {
 		this.persons = { ...this.persons, ...data };
+		this.events.emit('person:changed')
 	}
 
 	// Установка только адреса
 	setAddress(address: string) {
 		this.persons.address = address;
+		this.events.emit('address:changed')
 	}
 
 	// Установка только email
 	setEmail(email: string) {
 		this.persons.email = email;
+		this.events.emit('email:changed')
 	}
 
 	// Установка только телефона
 	setPhone(phone: string) {
 		this.persons.phone = phone;
+		this.events.emit('phone:changed')
 	}
 
 	// Установка только способа оплаты
 	setPayment(payment: string) {
 		this.persons.payment = payment;
+		this.events.emit('payment:changed')
 	}
 
 	getSavePersonInfo(): IShipping {
