@@ -10,8 +10,8 @@ export class Order extends Form<IShipping> {
 
     constructor(container: HTMLFormElement, events: IEvents) {
         super(container, events);
-        this.paymentCardButton = ensureElement<HTMLButtonElement>('.button_alt[name=card]')
-        this.paymentCashButton = ensureElement<HTMLButtonElement>('.button_alt[name=cash]')
+        this.paymentCardButton = ensureElement<HTMLButtonElement>('.button_alt[name=card]', this.container)
+        this.paymentCashButton = ensureElement<HTMLButtonElement>('.button_alt[name=cash]', this.container)
     }
 
     set address(value: string) {

@@ -10,6 +10,7 @@ export class Catalog {
     }
 
     setProducts(products: IItem[]): void {
+
         this.products = products
         this.events.emit('catalog:changed');
     };

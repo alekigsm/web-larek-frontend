@@ -19,9 +19,15 @@ export class CardCatalog extends Component<IItem> {
         this._cardTitle = this.container.querySelector('.card__title');
         this._cardCategory = ensureElement('.card__category', this.container);
 
+        if (actions?.onClick)
+            this.container.addEventListener('click', actions.onClick)
     }
 
-    set price(price: number) {
+    set price(price: number | null) {
+        if (!price) {
+            this._cardPrice.textContent = `Бесценно`;
+            return;
+        }
         this._cardPrice.textContent = `${price} синапсов`;
     }
     set title(title: string) {
@@ -29,6 +35,29 @@ export class CardCatalog extends Component<IItem> {
     }
     set category(category: string) {
         this._cardCategory.textContent = `${category}`;
+        /* 
+                this._cardCategory.classList.toggle('card__category_soft', category == 'soft')
+                this._cardCategory.classList.toggle('card__category_hard', category == 'hard')
+                this._cardCategory.classList.toggle('card__category_other', category == 'other')
+                this._cardCategory.classList.toggle('card__category_additional', category == 'additional')
+                this._cardCategory.classList.toggle('card__category_button', category == 'button')
+         */
+        /*if (this._cardCategory.textContent == 'card__category_soft') {
+          this._cardCategory.classList.add('card__category_soft')
+      }
+      else if (category == 'card__category_hard') {
+          this._cardCategory.classList.add('card__category_hard')
+      }
+      else if (category == 'card__category_other') {
+          this._cardCategory.classList.add('card__category_other')
+      }
+      else if (category == 'card__category_additional') {
+          this._cardCategory.classList.add('card__category_additional')
+      }
+      else if (category == 'card__category_button') {
+          this._cardCategory.classList.add('card__category_button')
+      } */
+
     }
 
     set image(value: string) {
