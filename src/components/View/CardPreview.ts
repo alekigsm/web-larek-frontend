@@ -31,7 +31,12 @@ export class CardPreview extends Component<IItem> {
         this._cardText.textContent = `${description}`;
     }
 
-    set price(price: number) {
+    set price(price: number | null) {
+        if (!price) {
+            this._cardPrice.textContent = `Бесценно`;
+            this._cardButton.disabled = true;
+            return;
+        }
         this._cardPrice.textContent = `${price} синапсов`;
     }
 

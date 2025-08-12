@@ -36,33 +36,28 @@ const successTemplate = ensureElement<HTMLTemplateElement>('#success');
 
 //модели данных
 const catalog = new Catalog(events);
-const basket = new ModelBasket(events);
+const modelBasket = new ModelBasket(events);
 const buyer = new Buyer(events);
 
 // компоненты представления
+const actionsBasket = {
+	onClick: () => {
+		modal.render({ content: order.render() })
+	}
+}
+const basket = new Basket(cloneTemplate(basketTemplate), actionsBasket)
 const order = new Order(cloneTemplate(orderTemplate), events);
 const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
-const successContainer = cloneTemplate('#success');
 const page = new Page(ensureElement<HTMLElement>('.page'), events);
-
 const actions = {
 	onClick: () => {
 		modal.close();
 	}
 }
-//const success = new Success(cloneTemplate(successTemplate), actions);
-const success = new Success(successContainer, actions)
-//modal.render({ content: success.render() })
+const success = new Success(cloneTemplate(successTemplate), actions);
 
 
 
-
-
-api.getProductList()
-	.then((items) => {
-		catalog.setProducts(items)
-	})
-	.catch((error) => { console.log(error) })
 
 events.on('catalog:changed', () => {
 	const cardArray = catalog.getProducts()
@@ -79,8 +74,6 @@ events.on('catalog:changed', () => {
 	page.render({ catalog: cardArray })
 });
 
-
-
 events.on('product:selected', () => {
 	const actions = {
 		onClick: () => {
@@ -88,10 +81,16 @@ events.on('product:selected', () => {
 		},
 	};
 	const card = new CardPreview(cloneTemplate(cardPreviewTemplate), actions);
+	let buttontext = '';
+	if (catalog.getSelectedProduct().price) {
+		buttontext = modelBasket.hasProduct(catalog.getSelectedProduct()) ? 'Удалить из корзины' : 'Купить'
+	}
+	else {
+		buttontext = 'Недоступно'
+	}
 	const itemData = {
 		...catalog.getSelectedProduct(),
-		buttonText: basket.hasProduct(catalog.getSelectedProduct()) ? 'Удалить из корзины' : 'Добавить в корзину',
-
+		buttonText: buttontext
 	};
 	const cardElement = card.render(itemData)
 	modal.render({ content: cardElement })
@@ -99,35 +98,37 @@ events.on('product:selected', () => {
 });
 
 events.on('product:click', () => {
-	if (basket.hasProduct(catalog.getSelectedProduct())) {
-		basket.delProduct(catalog.getSelectedProduct().id)
-		page.render({ counter: basket.getCountProduct() })
+	if (modelBasket.hasProduct(catalog.getSelectedProduct())) {
+		modelBasket.delProduct(catalog.getSelectedProduct().id)
+
 	}
 	else {
-		basket.addProduct(catalog.getSelectedProduct())
-		page.render({ counter: basket.getCountProduct() })
+		modelBasket.addProduct(catalog.getSelectedProduct())
+
 	}
 	modal.close();
 
 })
 
 events.on('basket:changed', () => {
-	const cardArray = basket.getListedProduct()
-		.map((item) => {
+	page.render({ counter: modelBasket.getCountProduct() })
+	const cardArray = modelBasket.getListedProduct()
+		.map((item, index) => {
 			const actions = {
 				onClick: () => {
-					catalog.setSelectedProduct(item);
+					modelBasket.delProduct(item.id)
 				}
 			}
 			const card = new CardBasket(cloneTemplate(cardBasketTemplate), actions);
-			const cardElement = card.render(item)
+			const cardElement = card.render({ ...item, counter: index + 1 })
 			return cardElement
 		});
+	basket.render({ items: cardArray, total: modelBasket.getTotalPrice() })
+})
 
-	page.render({ catalog: cardArray })
-
-});
-
+events.on('basket:open', () => {
+	modal.render({ content: basket.render() })
+})
 
 events.on(`modal:open`, () => {
 	page.render({ locked: true })
@@ -137,3 +138,12 @@ events.on(`modal:open`, () => {
 events.on(`modal:close`, () => {
 	page.render({ locked: false })
 })
+
+
+api.getProductList()
+	.then((items) => {
+		catalog.setProducts(items)
+	})
+	.catch((error) => { console.log(error) })
+
+modelBasket.clearBasket();

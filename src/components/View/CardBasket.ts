@@ -6,7 +6,7 @@ interface Actions {
     onClick: () => void;
 }
 
-export class CardBasket extends Component<IItem> {
+export class CardBasket extends Component<IItem & { counter: number }> {
     protected _basketItem: HTMLElement;
     protected _price: HTMLElement;
     protected _Title: HTMLElement;
