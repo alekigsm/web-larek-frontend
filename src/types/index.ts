@@ -26,6 +26,7 @@ export interface IOrder extends IShipping {
 
 export interface IOrderResult {
     id: string;
+    total: number;
 }
 
 export type FormErrors = Partial<Record<keyof IOrder, string>>;

@@ -12,6 +12,9 @@ export class Order extends Form<IShipping> {
         super(container, events);
         this.paymentCardButton = ensureElement<HTMLButtonElement>('.button_alt[name=card]', this.container)
         this.paymentCashButton = ensureElement<HTMLButtonElement>('.button_alt[name=cash]', this.container)
+
+        this.paymentCardButton.addEventListener('click', () => this.onInputChange('payment', 'card'))
+        this.paymentCashButton.addEventListener('click', () => this.onInputChange('payment', 'cash'))
     }
 
     set address(value: string) {
