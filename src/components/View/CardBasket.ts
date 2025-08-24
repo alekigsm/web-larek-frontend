@@ -25,15 +25,14 @@ export class CardBasket extends Component<IItem & { counter: number }> {
 
 
     set price(price: number) {
-
-        this._price.textContent = `${price} синапсов`;
+        this.setText(this._price, `${price} синапсов`);
     }
 
     set title(title: string) {
-        this._Title.textContent = `${title} синапсов`;
+        this.setText(this._Title, `${title} синапсов`);
     }
 
     set counter(count: number) {
-        this._basketItem.textContent = `${count}`
+        this.setText(this._basketItem, `${count}`);
     }
 }

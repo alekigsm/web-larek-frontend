@@ -21,8 +21,8 @@ export class Order extends Form<IShipping> {
         (this.container.elements.namedItem('address') as HTMLInputElement).value = value;
     }
     set payment(value: string) {
-        this.paymentCardButton.classList.toggle('button_alt-active', value == 'card')
-        this.paymentCashButton.classList.toggle('button_alt-active', value == 'cash')
+        this.toggleClass(this.paymentCardButton, 'button_alt-active', value == 'card');
+        this.toggleClass(this.paymentCashButton, 'button_alt-active', value == 'cash');
     }
 
 }

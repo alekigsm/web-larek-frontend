@@ -10,20 +10,6 @@ export class LarekApi extends Api {
         this.cdn = cdn;
     }
 
-    /*     getLotItem(id: string): Promise<ILot> {
-            return this.get(`/lot/${id}`).then(
-                (item: ILot) => ({
-                    ...item,
-                    image: this.cdn + item.image,
-                })
-            ); 
-        }
-    
-        getLotUpdate(id: string): Promise<LotUpdate> {
-            return this.get(`/lot/${id}/_auction`).then(
-                (data: LotUpdate) => data
-            );
-        } */
 
     getProductList(): Promise<IItem[]> {
         return this.get('/product').then((data: ApiListResponse<IItem>) =>
@@ -34,11 +20,7 @@ export class LarekApi extends Api {
         );
     }
 
-    /*     placeBid(id: string, bid: IBid): Promise<LotUpdate> {
-            return this.post(`/lot/${id}/_bid`, bid).then(
-                (data: ILot) => data
-            );
-        } */
+
 
     orderProducts(order: IOrder): Promise<IOrderResult> {
         return this.post('/order', order).then(
